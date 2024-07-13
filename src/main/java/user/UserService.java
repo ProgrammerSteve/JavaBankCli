@@ -2,8 +2,12 @@ package user;
 
 public class UserService {
 
-    //sign by email
-    //sign by password
+
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public boolean isNameFormattedCorrectly(String name){
         return !name.isEmpty();
@@ -15,5 +19,9 @@ public class UserService {
 
     public boolean isPasswordMatching(String passwordOne, String passwordTwo){
         return passwordOne.equals(passwordTwo);
+    }
+
+    public boolean createUser(User user){
+        return userRepository.createUser(user);
     }
 }

@@ -1,8 +1,12 @@
 package user;
 
+import account.Account;
+import account.AccountRepository;
 import utils.DatabaseConfig;
 
+import javax.sound.midi.SysexMessage;
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,8 +15,22 @@ import java.util.Optional;
 
 public class UserRepository {
     DataSource dataSource= DatabaseConfig.createDataSource();
-    private String sqlFindByUsername="select * from USERS where name=?";
-    private String sqlCreateUser="insert into USERS (username, password) values (?, ?)";
+    AccountRepository accountRepository;
+
+    public UserRepository(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    public AccountRepository getAccountRepository() {
+        return accountRepository;
+    }
+
+    public void setAccountRepository(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    private String sqlFindByUsername="select * from USERS where username=?";
+    private String sqlCreateUser="insert into USERS (username, password) values (?, ?) RETURNING user_id";
 
     public Optional<User> findByUsername(String username){
         try(Connection connection= dataSource.getConnection()){
@@ -33,13 +51,25 @@ public class UserRepository {
         return Optional.empty();
     }
 
-    public boolean createUser(String username,String password){
+    public boolean createUser(User user){
         try(Connection connection= dataSource.getConnection()){
-            PreparedStatement insertPs=connection.prepareStatement(sqlCreateUser);
-            insertPs.setString(1,username);
-            insertPs.setString(2,password);
-            int insertCount=insertPs.executeUpdate();
-            return insertCount==1;
+            Integer userId = null;
+            try (PreparedStatement insertUserPs = connection.prepareStatement(sqlCreateUser)) {
+                insertUserPs.setString(1, user.getUsername());
+                insertUserPs.setString(2, user.getPassword());
+                ResultSet rs = insertUserPs.executeQuery();
+                if (rs.next()) {
+                    userId = rs.getInt("user_id");
+                }else{
+                    new RuntimeException("user_id was not retrieved from create User");
+                }
+                Account newAccount=new Account(userId, new BigDecimal(0));
+                return accountRepository.createAccount(newAccount);
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return false;
+
         }catch(SQLException e){
             e.printStackTrace();
         }

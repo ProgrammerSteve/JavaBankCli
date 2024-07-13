@@ -3,7 +3,6 @@ package utils;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.io.FileReader;
 import java.io.IOException;
 
 import java.io.InputStream;
