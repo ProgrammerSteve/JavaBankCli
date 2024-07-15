@@ -2,6 +2,7 @@ package utils.auth;
 
 import user.User;
 import user.UserRepository;
+import utils.hashing.PasswordHasher;
 
 import java.util.Optional;
 
@@ -17,7 +18,8 @@ public class AuthService {
         Optional<User> userOptional= userRepository.findByUsername(username);
         if(userOptional.isPresent()){
             User user = userOptional.get();
-            if(user.getPassword().equals(password) && user.getUsername().equals(username)){
+
+            if(PasswordHasher.verifyPassword(password, user.getPassword()) && user.getUsername().equals(username)){
                 return user;
             }
         }

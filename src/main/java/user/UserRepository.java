@@ -3,6 +3,8 @@ package user;
 import account.Account;
 import account.AccountRepository;
 import utils.DatabaseConfig;
+import utils.hashing.PasswordHasher;
+
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;

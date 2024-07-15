@@ -2,6 +2,7 @@ package user;
 
 import utils.InputUtils;
 import utils.auth.AuthController;
+import utils.hashing.PasswordHasher;
 
 public class UserController {
     private final UserService userService;
@@ -106,7 +107,8 @@ public class UserController {
             if(confirmPassword.equals("-1")){
                 break;
             }else if(userService.isPasswordMatching(password,confirmPassword)){
-                User newUser=new User(username, password);
+                String hashedPassword = PasswordHasher.hashPasswordWithSalt(password);
+                User newUser=new User(username, hashedPassword);
                 boolean isCreated=userService.createUser(newUser);
                 if(!isCreated){
                     System.out.println("Error creating user, please try again");

@@ -27,9 +27,9 @@ class Main {
              if(instance.getUser()==null){
                  StringBuilder sbNoAuth = new StringBuilder();
                  sbNoAuth.append("Choose an action:\n");
-                 sbNoAuth.append("1:login\n");
-                 sbNoAuth.append("2:register\n");
-                 sbNoAuth.append("3:exit\n");
+                 sbNoAuth.append("1:Login\n");
+                 sbNoAuth.append("2:Register\n");
+                 sbNoAuth.append("3:Exit\n");
                  String messageNoAuth = sbNoAuth.toString();
                  actionOne = InputUtils.readInt(messageNoAuth);
                  switch (actionOne) {
