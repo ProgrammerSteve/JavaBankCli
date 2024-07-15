@@ -1,4 +1,6 @@
+import account.AccountController;
 import account.AccountRepository;
+import account.AccountService;
 import user.User;
 import user.UserController;
 import user.UserRepository;
@@ -14,14 +16,19 @@ import javax.sql.DataSource;
 
 class Main {
      public static void main(String[] args){
-         System.out.println("Welcome to SteveFargo!");
+         System.out.println("Welcome to the Java Bank CLI!");
          AccountRepository accountRepository= new AccountRepository();
          UserRepository userRepository=new UserRepository(accountRepository);
+         AccountService accountService=new AccountService(accountRepository,userRepository);
          AuthService authService=new AuthService(userRepository);
          AuthController authController=new AuthController(authService);
          UserService userService=new UserService(userRepository);
          UserController userController=new UserController(userService,userRepository,authController);
          AuthSingleton instance=AuthSingleton.getInstance();
+         AccountController accountController=new AccountController(
+            userRepository,
+                  accountRepository
+         );
 
          int actionOne;
          do {
@@ -45,11 +52,10 @@ class Main {
                      default:
                          System.out.println("\nvalue not found");
                          System.out.println("try again...\n");
-                         continue;
                  }
              }else{
                  StringBuilder sbAuth = new StringBuilder();
-                 sbAuth.append("Hello "+instance.getUser().getUsername()+"Choose an action:\n");
+                 sbAuth.append("Hello "+instance.getUser().getUsername()+", Choose an action:\n");
                  sbAuth.append("1:ViewBalance\n");
                  sbAuth.append("2:Withdraw\n");
                  sbAuth.append("3:Deposit\n");
@@ -60,12 +66,15 @@ class Main {
                  switch (actionOne) {
                      case 1:
                          //View balance
+                         accountController.accountViewBalance();
                          break;
                      case 2:
                          //Withdraw
+                         accountController.accountWithdraw();
                          break;
                      case 3:
                          //Deposit
+                         accountController.accountDeposit();
                          break;
                      case 4:
                          //Logout
@@ -77,13 +86,10 @@ class Main {
                      default:
                          System.out.println("\nvalue not found");
                          System.out.println("try again...\n");
-                         continue;
                  }
              }
          }while(instance.getUser()==null?actionOne!=3:actionOne!=5);
-
          System.out.println("closing app...\n");
          InputUtils.closeScanner();
      }
-
 }

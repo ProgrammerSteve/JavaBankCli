@@ -44,6 +44,7 @@ public class UserRepository {
                     resultSet.getString("username"),
                     resultSet.getString("password")
             );
+            foundUser.setUserId(resultSet.getInt("user_id"));
             return Optional.of(foundUser);
         }catch(SQLException e){
             e.printStackTrace();

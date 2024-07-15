@@ -1,5 +1,6 @@
 package utils;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class InputUtils {
@@ -38,6 +39,23 @@ public class InputUtils {
                 valid = true;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a valid double.");
+            }
+        }
+        return result;
+    }
+
+    // Reads a double from the console
+    public static BigDecimal readBigDecimal(String prompt) {
+        BigDecimal result = new BigDecimal(0);
+        boolean valid = false;
+        while (!valid) {
+            System.out.print(prompt);
+            try {
+                double enteredAmount = Double.parseDouble(scanner.nextLine());
+                result = result.add(BigDecimal.valueOf(enteredAmount));
+                valid = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid BigInt.");
             }
         }
         return result;
