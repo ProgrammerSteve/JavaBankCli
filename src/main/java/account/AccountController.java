@@ -1,24 +1,17 @@
 package account;
 
 import user.User;
-import user.UserRepository;
-import user.UserService;
 import utils.InputUtils;
-import utils.auth.AuthController;
-import utils.auth.AuthService;
 import utils.auth.AuthSingleton;
-
 import java.math.BigDecimal;
 
 public class AccountController {
 
     private final AccountService accountService;
-
     public AccountController(
-                             UserRepository userRepository,
                              AccountRepository accountRepository
                            ) {
-        this.accountService=new AccountService(accountRepository, userRepository);
+        this.accountService=new AccountService(accountRepository);
 
     }
 

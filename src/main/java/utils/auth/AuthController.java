@@ -2,8 +2,6 @@ package utils.auth;
 
 import user.User;
 
-import java.util.Optional;
-
 public class AuthController {
     AuthService authService;
 

@@ -1,8 +1,7 @@
 package account;
 
-import user.User;
-import utils.DatabaseConfig;
 
+import utils.DatabaseConfig;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;

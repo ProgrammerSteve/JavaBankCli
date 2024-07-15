@@ -3,7 +3,6 @@ package user;
 public class User {
     private String username;
     private String password;
-
     private Integer userId;
 
     public Integer getUserId() {

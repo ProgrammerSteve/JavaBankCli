@@ -1,21 +1,14 @@
 package user;
 
-
 import utils.InputUtils;
 import utils.auth.AuthController;
-import utils.auth.AuthSingleton;
-
-import java.util.Optional;
-
 
 public class UserController {
     private final UserService userService;
-    private final UserRepository userRepository;
     private final AuthController authController;
 
-    public UserController(UserService userService, UserRepository userRepository, AuthController authController) {
+    public UserController(UserService userService,  AuthController authController) {
         this.userService=userService;
-        this.userRepository=userRepository;
         this.authController=authController;
     }
 

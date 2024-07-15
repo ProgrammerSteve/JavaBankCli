@@ -1,20 +1,14 @@
 package account;
 
 import user.User;
-import user.UserRepository;
-import utils.InputUtils;
-
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.Optional;
 
 public class AccountService {
-    private final UserRepository userRepository;
     private final AccountRepository accountRepository;
 
-    public AccountService(AccountRepository accountRepository,UserRepository userRepository) {
+    public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
-        this.userRepository=userRepository;
     }
 
     public BigDecimal getAccountBalance(User user){

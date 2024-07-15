@@ -1,34 +1,26 @@
 import account.AccountController;
 import account.AccountRepository;
 import account.AccountService;
-import user.User;
 import user.UserController;
 import user.UserRepository;
 import user.UserService;
-import utils.DatabaseConfig;
 import utils.InputUtils;
 import utils.auth.AuthController;
 import utils.auth.AuthService;
 import utils.auth.AuthSingleton;
-
-import javax.sql.DataSource;
-
 
 class Main {
      public static void main(String[] args){
          System.out.println("Welcome to the Java Bank CLI!");
          AccountRepository accountRepository= new AccountRepository();
          UserRepository userRepository=new UserRepository(accountRepository);
-         AccountService accountService=new AccountService(accountRepository,userRepository);
+         AccountService accountService=new AccountService(accountRepository);
          AuthService authService=new AuthService(userRepository);
          AuthController authController=new AuthController(authService);
          UserService userService=new UserService(userRepository);
-         UserController userController=new UserController(userService,userRepository,authController);
+         UserController userController=new UserController(userService,authController);
          AuthSingleton instance=AuthSingleton.getInstance();
-         AccountController accountController=new AccountController(
-            userRepository,
-                  accountRepository
-         );
+         AccountController accountController=new AccountController(accountRepository);
 
          int actionOne;
          do {
