@@ -51,7 +51,6 @@ public class UserRepository {
         }
         return Optional.empty();
     }
-
     public boolean createUser(User user){
         try(Connection connection= dataSource.getConnection()){
             Integer userId = null;
@@ -76,5 +75,4 @@ public class UserRepository {
         }
         return false;
     }
-
 }

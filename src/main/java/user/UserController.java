@@ -74,9 +74,13 @@ public class UserController {
             if(username.equals("-1")){
                 break;
             }else if(userService.isNameFormattedCorrectly(username)){
-                isNameSet=true;
-                registerPassword(username);
-
+                if(userService.isNameUnique(username)){
+                    isNameSet=true;
+                    registerPassword(username);
+                }else{
+                    System.out.println("Username already taken, please try again");
+                    continue;
+                }
             } else{
                 System.out.println("Incorrect format, please try again");
                 continue;

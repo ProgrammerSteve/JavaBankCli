@@ -63,7 +63,7 @@ public class AccountController {
                 System.out.println("Exiting withdraw action...");
                 return;
             }
-            if(balance.compareTo(withdraw)>0 && withdraw.compareTo(BigDecimal.ZERO) > 0){
+            if(balance.compareTo(withdraw)>=0 && withdraw.compareTo(BigDecimal.ZERO) > 0){
                 break;
             }
             else if (balance.compareTo(withdraw)<0) {

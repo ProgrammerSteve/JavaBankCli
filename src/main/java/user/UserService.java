@@ -1,5 +1,7 @@
 package user;
 
+import java.util.Optional;
+
 public class UserService {
 
     private final UserRepository userRepository;
@@ -14,6 +16,14 @@ public class UserService {
 
     public boolean isPasswordFormattedCorrectly(String password){
         return !password.isEmpty();
+    }
+
+    public boolean isNameUnique(String username){
+        Optional<User> optionalUser=userRepository.findByUsername(username);
+        if(optionalUser.isPresent()){
+            return false;
+        }
+        return true;
     }
 
     public boolean isPasswordMatching(String passwordOne, String passwordTwo){
